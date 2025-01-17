@@ -1,25 +1,26 @@
+
+//file name -app.js
 const express = require('express');
 const app = express();
 const port = 3000;
 
-// Middleware to parse JSON bodies
+
 app.use(express.json());
 
-// In-memory task storage
-let tasks = [];
-let nextId = 1;  // To simulate auto-incremented task IDs
 
-// Root endpoint
+let tasks = [];
+let nextId = 1;   
+
 app.get('/', (req, res) => {
     res.send('Welcome to the Task Management API! Visit /tasks to manage tasks.');
 });
 
-// GET /tasks - Retrieve all tasks
+
 app.get('/tasks', (req, res) => {
     res.json(tasks);
 });
 
-// POST /tasks - Create a new task
+
 app.post('/tasks', (req, res) => {
     const { title, description } = req.body;
 
@@ -37,7 +38,7 @@ app.post('/tasks', (req, res) => {
     res.status(201).json(newTask);
 });
 
-// PUT /tasks/:id - Update an existing task by ID
+
 app.put('/tasks/:id', (req, res) => {
     const taskId = parseInt(req.params.id);
     const { title, description, completed } = req.body;
@@ -55,7 +56,6 @@ app.put('/tasks/:id', (req, res) => {
     res.json(task);
 });
 
-// DELETE /tasks/:id - Delete a task by ID
 
 app.delete('/tasks/:id', (req, res) => {
     const taskId = parseInt(req.params.id);
@@ -68,7 +68,7 @@ app.delete('/tasks/:id', (req, res) => {
     tasks.splice(taskIndex, 1);
     res.status(200).json({ message: 'Task successfully deleted' });
 });
-// Start the server
+
 app.listen(port, () => {
     console.log(`Task API listening at http://localhost:${port}`);
 });
